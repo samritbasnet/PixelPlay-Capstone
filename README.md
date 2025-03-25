@@ -4,72 +4,84 @@
 
 ## Overview
 
-PixelPlay is a full-stack web application that allows users to browse, search, and filter games based on their preferences. Users can view detailed information about each game by clicking on a game card, which navigates to a dedicated game details page. The platform integrates both custom-curated game data and external game data fetched from the RAWG API, ensuring a rich and dynamic game catalog. Additionally, PixelPlay includes an admin dashboard where administrators can manage the game listings through CRUD operations. This project demonstrates full-stack development skills with a focus on building clean, scalable client and server architecture using practical, job-ready technologies.
+PixelPlay is a full-stack web application that allows users to browse, search, and filter a catalog of video games based on their preferences. Users can view detailed information about each game, save games to a personalized wishlist ("Pixel Shelf"), and explore both curated and dynamically fetched content using the RAWG API.
+
+The platform includes an admin dashboard for managing internal game listings through secure CRUD operations. PixelPlay is built with clean, scalable full-stack architecture, showcasing practical, job-ready skills across frontend, backend, database, and third-party API integration.
 
 ### Problem Space
 
-Gamers often face disjointed experiences when browsing video games across various platforms. PixelPlay solves this by providing:
+Gamers often face disjointed or overwhelming experiences when browsing video games online. Platforms typically prioritize sales over discovery, making it hard for users to track games they’re interested in.
 
-1. A centralized platform to browse and view video game listings.
-2. A combination of custom-curated game data (via Supabase) and external game data from the RAWG API to offer users a comprehensive catalog.
-3. Admin tools to manage the catalog easily, without manual database intervention.
-4. A clean, modern, responsive UI optimized for gamers, reducing friction in browsing and discovery.
+PixelPlay solves this by:
+
+Centralizing curated and external game data for a smoother browsing experience.
+
+Introducing search and filtering features to help users easily find the type of games they want.
+
+Allowing users to save favorite games to a personalized wishlist called the Pixel Shelf for future reference.
+
+Empowering admins to manage the internal catalog seamlessly without direct database access.
 
 ### User Profile
 
-**General Users:**
+🎮 General Users:
+Browse and explore games from both curated and external sources.
 
-- Gamers who browse/search for games.
-- Users who want to view the latest games and detailed information.
-- Users can click on a game to view its full details.
+Search by title and filter games by genre or rating.
 
-**Admin:**
+View detailed information for each game on a dedicated page.
 
-- Admin (you) manages the internal game catalog via a secure dashboard.
-- Admin performs CRUD operations to add, edit, or delete games stored in Supabase.
-- Admin serves API endpoints that supply game data to the client.
+Save favorite games to their Pixel Shelf wishlist for later.
+
+🛠️ Admin:
+Manage internal game listings through a secure admin dashboard.
+
+Perform full CRUD operations (create, read, update, delete) on games stored in Supabase.
+
+Secure access to the dashboard via JWT-based authentication.
 
 **Special Considerations:**
 
-- Secure, JWT-based admin authentication to prevent unauthorized access.
 - Smooth integration of external RAWG API data without exposing API Keys and handling vulnerabilities securely.
 - Clean, intuitive, mobile-responsive design with modern gaming aesthetics.
 
 ### Features
 
-Core Features:
+**Core Features:**
+➸ Browse Game Catalog (Supabase + RAWG API)
+View curated and dynamic game listings, all in one catalog.
 
-➸ **Browse Game Catalog (Supabase Data + RAWG API)**  
-Users can view all games fetched by admin and dynamically from RAWG API endpoints.
+➸ Search & Filter Functionality
+Search for games by title. Filter by genre or rating to narrow down game discovery.
 
-➸ **Search & Filter**  
-Search by title, filter by genre and rating.
+➸ Game Details Page
+Detailed view for each game: title, image, genre, description, rating, and release date.
 
-➸ **Game Details Page**  
-Displays detailed game information: title, description, genre, image, ratings, release date.
+➸ Pixel Shelf (Wishlist/Favorites)
+Users can save games to a personal wishlist, making it easier to revisit interesting titles.
 
-➸ **Admin Dashboard**  
-Secure admin login with JWT authentication.  
-Admin CRUD operations to:
+➸ Admin Dashboard
+Secure login with full CRUD functionality for managing the curated game catalog.
 
-- Add new games.
-- Edit existing games.
-- Delete games (stored in Supabase).
-
-➸ **RAWG API Integration**  
-Fetch and display additional external game data (popular/trending games) dynamically.  
-Secure API key handling via backend.
+➸ RAWG API Integration
+Display trending/popular games dynamically from the RAWG Video Game Database.
 
 ## Implementation
 
 ### Tech Stack
 
-Frontend: React, SASS  
-Backend: Node.js, Express.js  
-Database: Supabase  
-Authentication: JWT-based admin authentication  
-External API: RAWG API  
-Deployment: Vercel / Heroku  
+Frontend: React, SASS
+
+Backend: Node.js, Express.js
+
+Database: Supabase
+
+Authentication: JWT-based (Admin only)
+
+External API: RAWG Video Game API
+
+Deployment: Vercel (Frontend), Render or Heroku (Backend)
+
 Dev Tools: GitHub, ESLint, Postman, VSCode, Zsh
 
 ### APIs
@@ -79,7 +91,17 @@ Dev Tools: GitHub, ESLint, Postman, VSCode, Zsh
 
 ### Sitemap
 
-## ![PixelPlay SiteMap](./Assets/CapstoneRequiredments/Sitemap.png)
+/ → Home page with game listings (Supabase + RAWG)
+
+/search → Search results and filter controls
+
+/game/:id → Game details view
+
+/admin → Admin login
+
+/admin/dashboard → Admin dashboard (CRUD)
+
+/wishlist → User’s Pixel Shelf (wishlist)
 
 ### Mockups
 
@@ -90,40 +112,88 @@ Dev Tools: GitHub, ESLint, Postman, VSCode, Zsh
 
 ### Data
 
-![PixelPlayData](./Assets/CapstoneRequiredments/Data.png)
-
-- One table: **games**
-  - Each game is managed by the Admin (CRUD).
-  - Data is served via custom API endpoints.
-
-![PixelPlayEndPointData](./Assets/CapstoneRequiredments/External%20endpointdata.png)
-Dynamically fetched; not stored in the database.
-Used for listing trending/popular games.
-Filtered/sorted client-side (via server-provided secure API).
+![PixelPlay GameData](./Assets/CapstoneRequiredments/gamedata.png)
+![PixelPlay ApiData](./Assets/CapstoneRequiredments/apidata.png)
+![PixelPlay WishlistData](./Assets/CapstoneRequiredments/wishlistdata.png)
 
 ### Endpoints
 
-![PixelPlayPublicEndPoints](./Assets/CapstoneRequiredments/PublicEndpoints.png)
+**Admin Endpoints (Protected)**
 
-![PixelPlayAdminEndPoints](./Assets/CapstoneRequiredments/AdminEndpoints.png)
+POST /api/games → Add new game
+GET /api/games/:id → Get game by ID
+PUT /api/games/:id → Update game
+DELETE /api/games/:id → Delete game
+
+**Public Endpoints**
+
+GET /api/games → Get all internal games
+GET /api/games/search → Search/filter internal games
+GET /api/rawg/trending → Get external RAWG data (popular games)
+
+**Wishlist Endpoints**
+
+GET /api/wishlist → Get saved games
+POST /api/wishlist → Add game to wishlist
+DELETE /api/wishlist/:id → Remove game from wishlist
 
 ## Roadmap
 
-![PixelPlayRoadmap](./Assets/CapstoneRequiredments/Roadmap.png)
+**Sprint 1 (March 24–28) – Setup & Admin Features**
+
+1.Set up GitHub repo and file structure
+
+2.Initialize React, Node/Express, Supabase schema
+
+3.Create game table and seed data
+
+4.Build Admin Dashboard UI
+
+5.Implement CRUD (add/edit/delete games)
+
+6.Implement JWT-based admin login
+
+**Sprint 2 (March 29–April 2) – User Feature**
+
+1.Build home page with catalog view
+
+2.Integrate RAWG API (popular games)
+
+3.Add search + filter functionality
+
+4.Build Game Details Page
+
+5.Implement wishlist (Pixel Shelf) logic and UI
+
+6.Style entire frontend using SASS
+
+**Sprint 3 (April 3–6) – Polish & Deploy**
+
+1.Final UI polish and bug fixes
+
+2.Responsive design adjustments
+
+3.Deploy backend (Render/Heroku)
+
+4.Deploy frontend (Vercel)
+
+5.Prepare demo flow for presentation
+
+6.Write clean README and documentation
 
 ## Future Implementations
 
 1. **User Authentication & Profiles**  
-   Implement user signup/login/logout functionality.
+   Allow users to create accounts and persist their wishlist across sessions.
 
 2. **Shopping Cart & Checkout System**  
-   Introduce a cart system where users can add games and view a checkout summary 
+   Let users simulate game purchases with a cart and order summary.
 
 3. **Payment Gateway Integration**  
-   Integrate secure payment gateways (Stripe/PayPal) for real transactions.
+   Integrate Stripe/PayPal for real or mock checkout experiences.
 
 4. **User Reviews & Ratings**  
-   Allow authenticated users to submit reviews and ratings.
+   Enable users to rate and review games after exploring or buying.
 
-5. **Wishlist & Favorites**  
-   Allow users to save games to wishlist/favorites.
+5. **Flash Deals / Daily Discounts**
+   Gamify the shopping experience with rotating flash game deals.
