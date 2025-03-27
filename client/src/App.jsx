@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react';
-import './App.css';
-import { supabase } from './supabaseClient';
+import './App.scss';
+
 function App() {
-  
   return (
-    <>  
-        <h1>Pixel Play</h1>
+    <>
+      <h1>Pixel Play</h1>
     </>
   );
 }
