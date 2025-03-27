@@ -1,8 +1,5 @@
-/* ================================
-🎮 PixelPlay Typography Setup
-================================== */
-
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600&family=Orbitron:wght@500;700&display=swap');
+@use "variable" as *;
 
 $font-heading: 'Orbitron', sans-serif;
 $font-body: 'Exo 2', sans-serif;
@@ -52,10 +49,6 @@ h3 {
   font-size: 1.5rem;
 }
 
-// Utility font classes (optional use)
-.font-light {
-  font-weight: $font-light;
-}
 
 .font-regular {
   font-weight: $font-regular;
