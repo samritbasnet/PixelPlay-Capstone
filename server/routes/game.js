@@ -1,8 +1,18 @@
-const express = require('express');
+import express from 'express';
+import {
+  addGame,
+  deleteGame,
+  getGameById,
+  getGames,
+  updateGame,
+} from '../controllers/gameController.js';
+
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.json({ message: 'Games endpoint' });
-});
+router.get('/', getGames);
+router.get('/:id', getGameById);
+router.post('/', addGame);
+router.put('/:id', updateGame);
+router.delete('/:id', deleteGame);
 
-module.exports = router;
+export default router;
