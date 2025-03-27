@@ -1,0 +1,82 @@
+/* ================================
+🎮 PixelPlay Typography Setup
+================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600&family=Orbitron:wght@500;700&display=swap');
+
+$font-heading: 'Orbitron', sans-serif;
+$font-body: 'Exo 2', sans-serif;
+
+// Font weights
+$font-light: 300;
+$font-regular: 400;
+$font-semibold: 600;
+$font-bold: 700;
+
+// Base styles
+body {
+  font-family: $font-body;
+  font-weight: $font-regular;
+  font-size: 16px;
+  color: $secondary-color-white;
+  line-height: 1.6;
+  background-color: $primary-color-dark;
+  margin: 0;
+  padding: 0;
+}
+
+// Headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-heading;
+  font-weight: $font-bold;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+  margin: 0;
+  color: $secondary-color-white;
+}
+
+h1 {
+  font-size: 2.75rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+// Utility font classes (optional use)
+.font-light {
+  font-weight: $font-light;
+}
+
+.font-regular {
+  font-weight: $font-regular;
+}
+
+.font-semibold {
+  font-weight: $font-semibold;
+}
+
+.font-bold {
+  font-weight: $font-bold;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: $secondary-color-muted;
+}
