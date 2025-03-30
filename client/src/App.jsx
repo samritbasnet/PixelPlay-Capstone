@@ -1,10 +1,13 @@
+import { BrowserRouter } from 'react-router-dom';
 import './App.scss';
-
+import NavBar from './components/NavBar/NavBar';
 function App() {
   return (
-    <>
-      <h1>Pixel Play</h1>
-    </>
+    <main>
+      <BrowserRouter>
+        <NavBar />
+      </BrowserRouter>
+    </main>
   );
 }
 
