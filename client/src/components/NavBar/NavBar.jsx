@@ -1,22 +1,17 @@
-import { useState } from "react";
-import {
-  FaGamepad,
-  FaHeart,
-  FaSearch,
-  FaUserShield
-} from "react-icons/fa";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import "./NavBar.scss";
+import { useState } from 'react';
+import { FaGamepad, FaHeart, FaSearch, FaUserShield } from 'react-icons/fa';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import './NavBar.scss';
 
 function NavBar() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (query.trim()) {
       navigate(`/search?q=${encodeURIComponent(query.trim())}`);
-      setQuery("");
+      setQuery('');
     }
   };
 
@@ -28,8 +23,7 @@ function NavBar() {
       </Link>
 
       <div className="navbar__links-container">
-    
-      <form className="navbar__search-form" onSubmit={handleSearch}>
+        <form className="navbar__search-form" onSubmit={handleSearch}>
           <input
             type="text"
             placeholder="Search for games..."
@@ -47,12 +41,10 @@ function NavBar() {
           PixelShelf
         </NavLink>
 
-        <NavLink to="/admin" className="navbar__link">
+        <NavLink to="/admin/login" className="navbar__link">
           <FaUserShield className="navbar__icon" />
-          User
+          Admin Login
         </NavLink>
-
-     
       </div>
     </nav>
   );

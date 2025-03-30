@@ -70,9 +70,9 @@ Display trending/popular games dynamically from the RAWG Video Game Database.
 
 ### Tech Stack
 
-Frontend: React, SASS
+Frontend: React, SASS,Formik,React-Icons
 
-Backend: Node.js, Express.js
+Backend: Node.js, Express.js,JWT
 
 Database: Supabase
 
