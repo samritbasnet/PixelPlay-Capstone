@@ -2,40 +2,59 @@
 @use '../../styles/partials/variables' as *;
 @use '../../styles/partials/mixins' as *;
 @use '../../styles/partials/typography' as *;
+
 .login-form {
-  width: 90%;
-  max-width: 26.25rem;
-  margin: 2rem auto;
-  padding: 1rem;
+  width: 100%;
+  max-width: 28rem;
+  padding: 2rem 1.5rem;
   background-color: $gamer-dark;
-  border-radius: 0.75rem;
+  border-radius: 1rem;
   color: $secondary-color-white;
   font-family: 'Orbitron', sans-serif;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include tablet {
+    max-width: 32rem;
+    padding: 3rem 2rem;
+    border-radius: 1.25rem;
+  }
+
   &__title {
-    font-size: 1rem;
+    font-size: 1.4rem;
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     font-weight: 700;
     background: $gamer-gradient;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+
     @include tablet {
       font-size: 2rem;
     }
   }
+
   &__form {
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
+
+    @include tablet {
+      gap: 1.5rem;
+    }
   }
+
   &__field {
     display: flex;
     flex-direction: column;
   }
+
   &__input {
     padding: 0.75rem 1rem;
     border: 2px solid $gamer-secondary;
-    border-radius: 8px;
+    border-radius: 0.75rem;
     font-size: 1rem;
     background-color: $secondary-color-grey;
     color: $secondary-color-white;
@@ -43,7 +62,6 @@
 
     &::placeholder {
       color: $secondary-color-muted;
-      font-family: 'Orbitron', sans-serif;
     }
 
     &:focus {
@@ -51,31 +69,35 @@
       border-color: $gamer-highlight;
       box-shadow: 0 0 8px $gamer-highlight;
     }
+
     @include tablet {
-      font-size: 1.8rem;
+      font-size: 1.1rem;
+      padding: 1rem;
     }
   }
+
   &__error {
     color: $error-color;
     font-size: 0.8rem;
     margin-top: 0.3rem;
     font-weight: 500;
+
     @include tablet {
-      font-size: 1.2rem;
+      font-size: 1rem;
     }
   }
+
   &__button {
     padding: 0.85rem;
     background: $gamer-gradient;
     border: none;
-    border-radius: 10px;
+    border-radius: 0.75rem;
     color: $secondary-color-white;
     font-weight: 700;
     font-size: 1rem;
     text-transform: uppercase;
     cursor: pointer;
     transition: background 0.3s, box-shadow 0.3s;
-    font-family: 'Orbitron', sans-serif;
 
     &:hover:not(:disabled) {
       background: linear-gradient(90deg, #8a2be2, #ff4655);
@@ -85,6 +107,11 @@
     &:disabled {
       background-color: $secondary-color-muted;
       cursor: not-allowed;
+    }
+
+    @include tablet {
+      font-size: 1.1rem;
+      padding: 1rem;
     }
   }
 }
