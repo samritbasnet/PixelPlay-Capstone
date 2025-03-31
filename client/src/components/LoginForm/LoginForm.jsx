@@ -1,12 +1,14 @@
-import { Formik } from 'formik';
-import './LoginForm.scss';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Formik } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import './LoginForm.scss';
 
-const LoginForm = ({onLogin}) => {
-    const navigate=useNavigate();
+const LoginForm = ({ onLogin }) => {
+  const navigate = useNavigate();
   return (
     <div className="login-form">
+      <ToastContainer position="top-right" autoClose={3000} />
       <h1 className="login-form__title">Login</h1>
       <Formik
         initialValues={{ email: '', password: '' }}
@@ -24,24 +26,29 @@ const LoginForm = ({onLogin}) => {
 
           return errors;
         }}
-        onSubmit={async(values, { setSubmitting,setErrors }) => {
-         try{
-            const response=await axios.post('http://localhost:8081/api/admin/login',values);
-            localStorage.setItem('token',response.data.token);
+        onSubmit={async (values, { setSubmitting, setErrors }) => {
+          try {
+            const response = await axios.post(
+              'http://localhost:8081/api/admin/login',
+              values
+            );
+            localStorage.setItem('token', response.data.token);
+            toast.success('Login successful!');
             onLogin();
             navigate('/admin/dashboard');
-         }
-         catch(error){
-            if(error.response && error.response.status ===401){
-                setErrors({password:'Invalid email or password for admin'});
-            }else{
-                console.log(error);
-                setErrors({password:'Please enter correct credentials and try again later'});
+          } catch (error) {
+            if (error.response && error.response.status === 401) {
+              setErrors({ password: 'Invalid email or password for admin' });
+              toast.error('Invalid credentials!');
+            } else {
+              setErrors({
+                password: 'Please enter correct credentials and try again later',
+              });
+              toast.error('Something went wrong!');
             }
-         }
-         finally{
+          } finally {
             setSubmitting(false);
-         }
+          }
         }}
       >
         {({
