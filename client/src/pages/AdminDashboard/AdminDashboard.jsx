@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import './AdminDashboard.scss';
 
 const AdminDashboard = () => {
@@ -26,6 +27,7 @@ const AdminDashboard = () => {
       setGames(response.data);
     } catch (error) {
       console.error('Error fetching games:', error);
+      toast.error('Unauthorized! Please log in again.');
       if (error.response?.status === 401 || error.response?.status === 403) {
         localStorage.removeItem('token');
         navigate('/admin/login');
@@ -62,6 +64,7 @@ const AdminDashboard = () => {
       fetchGames();
     } catch (error) {
       console.error('Error adding game:', error);
+      toast.error('Failed to add game.');
     }
   };
 
@@ -74,21 +77,27 @@ const AdminDashboard = () => {
       await axios.put(`${API_URL}/${editGame.id}`, editGame, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      toast.success('Game updated successfully!');
       setEditGame(null);
       fetchGames();
     } catch (error) {
       console.error('Error updating game:', error);
+      toast.error('Failed to update game.');
     }
   };
 
   const handleDelete = async (id) => {
+    const confirm = window.confirm('Are you sure you want to delete this game?');
+    if (!confirm) return;
     try {
       await axios.delete(`${API_URL}/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      toast.success('Game deleted successfully!');
       fetchGames();
     } catch (error) {
       console.error('Error deleting game:', error);
+      toast.error('Failed to delete game.');
     }
   };
 
@@ -96,8 +105,8 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      <h1 className="admin-dashboard__title">Admin Dashboard</h1>
-
+      <ToastContainer position="top-right" autoClose={2500} />
+      <h1 className="admin-dashboard__title">Samrit Dashboard</h1>
       <div className="admin-dashboard__add-form">
         <h2 className="admin-dashboard__add-form-title">Add New Game</h2>
         {['title', 'genre', 'rating', 'imageUrl', 'releaseDate'].map((field) => (

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 import NavBar from './components/NavBar/NavBar';
 import AdminDashboard from './pages/AdminDashboard/AdminDashboard.jsx';
