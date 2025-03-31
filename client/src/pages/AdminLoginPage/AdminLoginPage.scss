@@ -1,0 +1,15 @@
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
+
+.admin-login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background-color: $primary-color-dark;
+
+  @include tablet {
+    padding: 2rem;
+  }
+}
