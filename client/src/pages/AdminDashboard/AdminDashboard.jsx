@@ -147,9 +147,9 @@ const AdminDashboard = () => {
                 <td>{game.genre}</td>
                 <td>{game.rating}</td>
                 <td>
-                  <img src={game.imageUrl} alt={game.title} width="80" />
+                  <img src={game.image_url} alt={game.title} width="80" />
                 </td>
-                <td>{game.releaseDate}</td>
+                <td>{game.release_date}</td>
                 <td>
                   <button
                     onClick={() => handleEdit(game)}
