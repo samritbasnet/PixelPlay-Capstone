@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { FaGamepad, FaHeart, FaSearch, FaUserShield } from 'react-icons/fa';
+import { BiCollection } from 'react-icons/bi';
+import { FaGamepad, FaSearch, FaUserShield } from 'react-icons/fa';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import './NavBar.scss';
 
@@ -37,8 +38,8 @@ function NavBar() {
         </form>
 
         <NavLink to="/wishlist" className="navbar__link">
-          <FaHeart className="navbar__icon" />
-          PixelShelf
+          <BiCollection className="navbar__icon" />
+          MyGames
         </NavLink>
 
         <NavLink to="/admin/login" className="navbar__link">

@@ -1,10 +1,10 @@
 import LoginForm from '../../components/LoginForm/LoginForm';
 import './AdminLoginPage.scss';
 
-const AdminLogin = () => {
+const AdminLogin = ({ onLogin }) => {
   return (
     <div className="admin-login-wrapper">
-      <LoginForm />
+      <LoginForm onLogin={onLogin} />
     </div>
   );
 };

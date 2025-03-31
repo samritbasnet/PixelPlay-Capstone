@@ -1,7 +1,10 @@
 import { Formik } from 'formik';
 import './LoginForm.scss';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const LoginForm = () => {
+const LoginForm = ({onLogin}) => {
+    const navigate=useNavigate();
   return (
     <div className="login-form">
       <h1 className="login-form__title">Login</h1>
@@ -21,11 +24,24 @@ const LoginForm = () => {
 
           return errors;
         }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit={async(values, { setSubmitting,setErrors }) => {
+         try{
+            const response=await axios.post('http://localhost:8081/api/admin/login',values);
+            localStorage.setItem('token',response.data.token);
+            onLogin();
+            navigate('/admin/dashboard');
+         }
+         catch(error){
+            if(error.response && error.response.status ===401){
+                setErrors({password:'Invalid email or password for admin'});
+            }else{
+                console.log(error);
+                setErrors({password:'Please enter correct credentials and try again later'});
+            }
+         }
+         finally{
             setSubmitting(false);
-          }, 400);
+         }
         }}
       >
         {({
