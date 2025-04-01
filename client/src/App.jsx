@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import './App.scss';
 import NavBar from './components/NavBar/NavBar';
 import AdminDashboard from './pages/AdminDashboard/AdminDashboard.jsx';
 import AdminLogin from './pages/AdminLoginPage/AdminLoginPage.Jsx';
+import GameList from './pages/GameList/GameList.jsx';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
@@ -19,6 +20,7 @@ function App() {
     <main>
       <BrowserRouter>
         <NavBar />
+        <ToastContainer position="top-right" autoClose={4000} theme="dark" />{' '}
         <Routes>
           <Route
             path="/admin/login"
@@ -30,6 +32,8 @@ function App() {
               isAuthenticated ? <AdminDashboard /> : <Navigate to="/admin/login" />
             }
           />
+          <Route path="/" element={<Navigate to="/games" />} />
+          <Route path="/games" element={<GameList />} />
         </Routes>
       </BrowserRouter>
     </main>
