@@ -28,9 +28,10 @@ const GameList = () => {
       const adminGames = adminRes.data.map((game) => ({
         id: `admin-${game.id}`,
         name: game.title,
-        background_image: game.imageUrl,
+        background_image: game.image_url,
         rating: game.rating,
-        released: game.releaseDate,
+        released: game.release_date,
+        description: game.description,
         source: 'admin',
       }));
 

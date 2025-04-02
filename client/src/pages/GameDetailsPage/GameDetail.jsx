@@ -39,7 +39,7 @@ const GameDetails = () => {
     <div className="game-details">
       <h1>{game.title || game.name}</h1>
       <img
-        src={game.imageUrl || game.background_image}
+        src={game.image_url || game.background_image}
         alt={game.title || game.name}
         className="game-details__image"
       />
@@ -50,7 +50,7 @@ const GameDetails = () => {
         <strong>Rating:</strong> {game.rating}
       </p>
       <p>
-        <strong>Release Date:</strong> {game.releaseDate || game.released}
+        <strong>Release Date:</strong> {game.release_date || game.released}
       </p>
       <div
         className="game-details__info description"
