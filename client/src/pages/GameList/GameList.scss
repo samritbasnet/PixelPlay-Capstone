@@ -3,14 +3,18 @@
 
 .game-list {
   background-color: $gamer-dark;
-  color: $gamer-light;
   padding: 1rem;
+  min-height: 100vh;
 
   &__title {
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: $gamer-accent;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+
+    @include tablet {
+      font-size: 2rem;
+    }
   }
 
   &__grid {
@@ -18,41 +22,58 @@
     flex-wrap: wrap;
     gap: 1rem;
     justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    @include tablet {
+      gap: 1.5rem;
+    }
+  }
+}
+
+.game-card {
+  background-color: $secondary-color-grey;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  text-decoration: none;
+  color: $gamer-light;
+  width: 100%;
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease;
+
+  @include tablet {
+    width: calc(50% - 0.75rem);
   }
 
-  .game-card {
-    background-color: $secondary-color-grey;
-    border-radius: 8px;
-    overflow: hidden;
-    width: 16rem;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.3s;
+  @include desktop {
+    width: calc(25% - 1.125rem);
+  }
 
-    &:hover {
-      transform: scale(1.02);
-    }
+  &:hover {
+    border-color: $gamer-accent;
+  }
 
-    &__image {
-      width: 100%;
-      height: 9rem;
-      object-fit: cover;
-    }
+  &__image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+  }
 
-    &__info {
-      padding: 1rem;
-    }
+  &__info {
+    padding: 0.75rem;
+  }
 
-    &__title {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
+  &__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $gamer-highlight;
+    margin-bottom: 0.5rem;
+  }
 
-    &__rating,
-    &__release {
-      font-size: 0.875rem;
-      color: $secondary-color-muted;
-    }
+  &__rating,
+  &__release {
+    font-size: 0.8rem;
+    color: $secondary-color-muted;
+    margin-bottom: 0.25rem;
   }
 }

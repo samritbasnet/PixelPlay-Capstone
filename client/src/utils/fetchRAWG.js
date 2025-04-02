@@ -6,7 +6,7 @@ const API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 export const fetchRawgGames = async () => {
   try {
     const response = await axios.get(RAWG_URL, {
-      params: { key: API_KEY, page_size: 12 },
+      params: { key: API_KEY, page_size: 14 },
     });
     return response.data.results;
   } catch (error) {
