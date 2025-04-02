@@ -39,7 +39,7 @@ function NavBar() {
 
         <NavLink to="/wishlist" className="navbar__link">
           <BiCollection className="navbar__icon" />
-          MyGames
+          PixelShelf
         </NavLink>
 
         <NavLink to="/admin/login" className="navbar__link">
