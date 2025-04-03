@@ -40,18 +40,13 @@ const PixelShelf = () => {
               </p>
               {game.genres && (
                 <p className="pixelshelf__genres">
-                  <strong>Genres:</strong> {game.genres.map((g) => g.name).join(', ')}
+                  <strong>Genres:</strong>{' '}
+                  {Array.isArray(game.genres)
+                    ? game.genres
+                        .map((g) => (typeof g === 'string' ? g : g.name))
+                        .join(', ')
+                    : game.genres}
                 </p>
-              )}
-              {game.description || game.description_raw || game.slug ? (
-                <p className="pixelshelf__desc">
-                  {game.description?.slice(0, 120) ||
-                    game.description_raw?.slice(0, 120) ||
-                    `Slug: ${game.slug}`}
-                  ...
-                </p>
-              ) : (
-                <p className="pixelshelf__desc">No description available.</p>
               )}
               <button
                 type="button"

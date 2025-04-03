@@ -8,6 +8,7 @@ import AdminDashboard from './pages/AdminDashboard/AdminDashboard.jsx';
 import AdminLogin from './pages/AdminLoginPage/AdminLoginPage.Jsx';
 import GameDetail from './pages/GameDetailsPage/GameDetail.jsx';
 import GameList from './pages/GameList/GameList.jsx';
+import HomePage from './pages/HomePage/HomePage.jsx';
 import PixelShelf from './pages/PixelShelf/PixelShelf.jsx';
 import SearchResults from './pages/SearchResult/SearchResults.jsx';
 function App() {
@@ -38,6 +39,8 @@ function App() {
               isAuthenticated ? <AdminDashboard /> : <Navigate to="/admin/login" />
             }
           />
+          <Route path="/" element={<HomePage />} />
+
           <Route path="/" element={<Navigate to="/games" />} />
           <Route path="/games" element={<GameList />} />
           <Route path="/game/:id" element={<GameDetail />} />

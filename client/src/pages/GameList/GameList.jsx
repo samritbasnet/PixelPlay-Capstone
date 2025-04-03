@@ -20,7 +20,7 @@ const GameList = () => {
   const fetchGames = async () => {
     try {
       const [rawgRes, adminRes] = await Promise.all([
-        axios.get(`https://api.rawg.io/api/games?key=${RAWG_API_KEY}&page_size=13`),
+        axios.get(`https://api.rawg.io/api/games?key=${RAWG_API_KEY}&page_size=12`),
         axios.get(`${BACKEND_API_URL}/games`),
       ]);
 

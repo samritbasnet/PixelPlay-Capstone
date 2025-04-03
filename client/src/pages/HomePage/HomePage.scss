@@ -1,0 +1,68 @@
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
+.homepage {
+  .hero {
+    background-image: url('src/assets/images/hero-banner.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+
+    &__overlay {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 2rem;
+      border-radius: 1rem;
+      text-align: center;
+      max-width: 90%;
+      color: $gamer-light;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    &__title {
+      font-size: 2rem;
+      font-family: 'Orbitron', sans-serif;
+      color: $gamer-accent;
+      margin-bottom: 1rem;
+      text-shadow: 1px 1px 3px black;
+    }
+
+    &__tagline {
+      font-size: 1.05rem;
+      color: $gamer-light;
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+    }
+
+    &__cta {
+      background-color: $gamer-accent;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 0.4rem;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: ($gamer-accent, 10%);
+      }
+    }
+
+    @include tablet {
+      height: 65vh;
+
+      &__title {
+        font-size: 2.4rem;
+      }
+
+      &__tagline {
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
