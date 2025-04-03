@@ -60,4 +60,19 @@
     color: $secondary-color-muted;
     font-size: 1.1rem;
   }
+  .pixelshelf__remove-btn {
+    margin-top: 0.5rem;
+    background-color: #ff4655;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background-color: #ff3344;
+    }
+  }
 }

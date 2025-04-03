@@ -9,7 +9,7 @@ import AdminLogin from './pages/AdminLoginPage/AdminLoginPage.Jsx';
 import GameDetail from './pages/GameDetailsPage/GameDetail.jsx';
 import GameList from './pages/GameList/GameList.jsx';
 import PixelShelf from './pages/PixelShelf/PixelShelf.jsx';
-
+import SearchResults from './pages/SearchResult/SearchResults.jsx';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
 
@@ -30,6 +30,8 @@ function App() {
             path="/admin/login"
             element={<AdminLogin onLogin={() => setIsAuthenticated(true)} />}
           />
+          <Route path="/search" element={<SearchResults />} />
+
           <Route
             path="/admin/dashboard"
             element={
