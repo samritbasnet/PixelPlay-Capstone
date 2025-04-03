@@ -11,46 +11,67 @@ const BACKEND_API_URL = import.meta.env.VITE_API_BASE_URL;
 const GameList = () => {
   const [games, setGames] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [sortOption, setSortOption] = useState('');
 
   useEffect(() => {
-    const saved = localStorage.getItem('pixelShelf');
+    const saved = localStorage.getItem('pixelshelf');
     if (saved) setFavorites(JSON.parse(saved));
   }, []);
 
-  const fetchGames = async () => {
-    try {
-      const [rawgRes, adminRes] = await Promise.all([
-        axios.get(`https://api.rawg.io/api/games?key=${RAWG_API_KEY}&page_size=12`),
-        axios.get(`${BACKEND_API_URL}/games`),
-      ]);
+  useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        const rawgRes = await axios.get(
+          `https://api.rawg.io/api/games?key=${RAWG_API_KEY}&page_size=12`
+        );
+        const adminRes = await axios.get(`${BACKEND_API_URL}/games`);
 
-      const rawgGames = rawgRes.data.results.map((game) => ({
-        id: game.id,
-        name: game.name,
-        background_image: game.background_image,
-        rating: game.rating,
-        released: game.released,
-        source: 'rawg',
-      }));
+        const rawgGames = rawgRes.data.results.map((game) => ({
+          id: game.id,
+          name: game.name,
+          background_image: game.background_image,
+          rating: game.rating,
+          released: game.released,
+          genres: game.genres,
+          description: game.slug,
+          source: 'rawg',
+        }));
 
-      const adminGames = adminRes.data.map((game) => ({
-        id: `admin-${game.id}`,
-        name: game.title,
-        background_image: game.image_url,
-        rating: game.rating,
-        released: game.release_date,
-        description: game.description,
-        source: 'admin',
-      }));
+        const adminGames = adminRes.data.map((game) => ({
+          id: `admin-${game.id}`,
+          name: game.title,
+          background_image: game.image_url,
+          rating: game.rating,
+          released: game.release_date,
+          description: game.description,
+          source: 'admin',
+        }));
 
-      setGames([...adminGames, ...rawgGames]);
-    } catch (error) {
-      console.error('Error fetching games:', error);
-    }
-  };
+        const combinedGames = [...adminGames, ...rawgGames];
+
+        if (sortOption === 'rating') {
+          combinedGames.sort((a, b) => b.rating - a.rating);
+        } else if (sortOption === 'release') {
+          combinedGames.sort(
+            (a, b) =>
+              new Date(b.released || b.release_date) -
+              new Date(a.released || a.release_date)
+          );
+        }
+
+        setGames(combinedGames);
+      } catch (error) {
+        console.error('Error fetching games:', error);
+        toast.error('Failed to load games');
+      }
+    };
+
+    fetchGames();
+  }, [sortOption]);
+
   const handleFavorite = (e, game) => {
-    e.stopPropagation();
     e.preventDefault();
+    e.stopPropagation();
 
     const alreadyAdded = favorites.find((g) => g.id === game.id);
     let updated;
@@ -68,13 +89,27 @@ const GameList = () => {
   };
 
   const isFavorited = (gameId) => favorites.some((g) => g.id === gameId);
-  useEffect(() => {
-    fetchGames();
-  }, []);
 
   return (
     <div className="game-list">
       <h1 className="game-list__title">Explore Games</h1>
+
+      <div className="game-list__controls">
+        <label htmlFor="sort" className="game-list__sort-label">
+          Sort by:
+        </label>
+        <select
+          id="sort"
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+          className="game-list__sort-select"
+        >
+          <option value="">Default</option>
+          <option value="rating">Rating (High to Low)</option>
+          <option value="release">Release Date (Newest)</option>
+        </select>
+      </div>
+
       <div className="game-list__grid">
         {games.map((game) => (
           <Link to={`/game/${game.id}`} key={game.id} className="game-card">

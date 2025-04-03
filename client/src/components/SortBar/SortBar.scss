@@ -1,0 +1,21 @@
+@use '../../styles/partials/index' as *;
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/typography' as *;
+
+.sort-bar {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+
+  &__select {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.4rem;
+    border: 1px solid #ccc;
+    background-color: $gamer-dark;
+    color: $gamer-light;
+  }
+}
