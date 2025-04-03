@@ -129,7 +129,7 @@ const AdminDashboard = () => {
           onChange={handleChange}
           className="admin-dashboard__textarea"
         />
-        <button onClick={handleAddGame} className="admin-dashboard__button">
+        <button onClick={handleAddGame} className="admin-dashboard__button" type="button">
           Add Game
         </button>
       </div>
@@ -163,12 +163,14 @@ const AdminDashboard = () => {
                   <button
                     onClick={() => handleEdit(game)}
                     className="admin-dashboard__button"
+                    type="button"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(game.id)}
                     className="admin-dashboard__button"
+                    type="button"
                   >
                     Delete
                   </button>
