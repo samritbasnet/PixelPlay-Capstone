@@ -3,11 +3,23 @@ import './SortBar.scss';
 
 const SortBar = ({ onSortChange, onGenreChange }) => {
   const [genres, setGenres] = useState([]);
+
   useEffect(() => {
-    fetch(`https://api.rawg.io/api/genres?key=${import.meta.env.VITE_RAWG_API_KEY}`)
-      .then((res) => res.json())
-      .catch((err) => console.error('Failed to fetch games:', err));
+    const fetchGenres = async () => {
+      try {
+        const res = await fetch(
+          `https://api.rawg.io/api/genres?key=${import.meta.env.VITE_RAWG_API_KEY}`
+        );
+        const data = await res.json();
+        setGenres(data.results || []);
+      } catch (err) {
+        console.error('Failed to fetch genres:', err);
+      }
+    };
+
+    fetchGenres();
   }, []);
+
   return (
     <div className="sort-bar">
       <select onChange={(e) => onSortChange(e.target.value)} className="sort-bar__select">
@@ -16,7 +28,11 @@ const SortBar = ({ onSortChange, onGenreChange }) => {
         <option value="released">Release Date</option>
         <option value="name">Name</option>
       </select>
-      <select onChange={e > onSortChange(e.target.value)} className="sort-bar__select">
+
+      <select
+        onChange={(e) => onGenreChange(e.target.value)}
+        className="sort-bar__select"
+      >
         <option value="">Filter by Genre</option>
         {genres.map((genre) => (
           <option key={genre.id} value={genre.slug}>
@@ -27,4 +43,5 @@ const SortBar = ({ onSortChange, onGenreChange }) => {
     </div>
   );
 };
+
 export default SortBar;
