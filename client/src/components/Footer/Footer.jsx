@@ -1,4 +1,5 @@
 import { FaDiscord, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import './Footer.scss';
 
 const Footer = () => {
@@ -14,13 +15,13 @@ const Footer = () => {
           <h4 className="footer__heading">Explore</h4>
           <ul className="footer__links">
             <li>
-              <a href="http://localhost:5174/">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <a href="http://localhost:5174/wishlist">Pixelshelf</a>
+              <Link to="/wishlist">Pixelshelf</Link>
             </li>
             <li>
-              <a href="http://localhost:5174/admin/login">Admin</a>
+              <Link to="/admin/login">Admin</Link>
             </li>
           </ul>
         </div>
