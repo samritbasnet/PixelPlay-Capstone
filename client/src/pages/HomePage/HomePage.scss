@@ -66,3 +66,10 @@
     }
   }
 }
+#news {
+  margin-bottom: 0;
+
+  @include tablet {
+    margin-bottom: 0;
+  }
+}

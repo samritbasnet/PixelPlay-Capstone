@@ -10,12 +10,13 @@
   font-family: 'Orbitron', sans-serif;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  margin-bottom: 8rem;
+  gap: 4rem;
+  padding-bottom: 3rem;
 
   @include tablet {
     padding: 2rem;
     margin-bottom: 0;
+    padding-bottom: 3rem;
   }
 
   &__title {
