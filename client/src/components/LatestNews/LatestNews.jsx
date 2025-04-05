@@ -25,7 +25,7 @@ const LatestNews = () => {
 
   return (
     <section className="latest-news">
-      <h2 className="latest-news__title">📰 Latest Game Releases Date of 2025</h2>
+      <h2 className="latest-news__title">📰 Latest Game Release Date of 2025</h2>
       <div className="latest-news__list">
         {games.map((game) => (
           <div className="news-card" key={game.id}>
