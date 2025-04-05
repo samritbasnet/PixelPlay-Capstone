@@ -22,7 +22,7 @@ const GameList = () => {
     const fetchGames = async () => {
       try {
         const rawgRes = await axios.get(
-          `https://api.rawg.io/api/games?key=${RAWG_API_KEY}&page_size=12`
+          `https://api.rawg.io/api/games?key=${RAWG_API_KEY}&page_size=19`
         );
         const adminRes = await axios.get(`${BACKEND_API_URL}/games`);
 
