@@ -123,7 +123,7 @@ Gamers often face disjointed or overwhelming experiences when browsing video gam
 
 Built by Samrit Basnet
 
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com/in/samritbasnet)  
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/samrit-basnet/)  
 [![GitHub](https://img.shields.io/badge/-GitHub-171515?style=flat&logo=github&logoColor=white)](https://github.com/samritbasnet)
 
 ## 🚀 Future Implementation
@@ -151,4 +151,4 @@ Login for user accounts as well
 
 ---
 
-©Samrit Basnet PixelPlay 2025  – All rights reserved.
+©Samrit Basnet PixelPlay 2025 – All rights reserved.
