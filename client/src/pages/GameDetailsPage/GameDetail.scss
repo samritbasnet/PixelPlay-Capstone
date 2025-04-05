@@ -1,0 +1,75 @@
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/typography' as *;
+
+.game-details {
+  background-color: $gamer-dark;
+  padding: 1rem;
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  @include tablet {
+    padding: 2rem;
+    max-width: 62.5rem;
+    margin: 0 auto;
+  }
+  p {
+    color: $secondary-color-white;
+  }
+
+  h1 {
+    color: $gamer-accent;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    @include tablet {
+      font-size: 2rem;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    max-width: 25rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    border: 2px solid $gamer-accent;
+    @include tablet {
+      max-width: 37.5rem;
+    }
+  }
+
+  &__info {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: $secondary-color-white;
+    line-height: 1.5;
+    text-align: center;
+    max-width: 90%;
+    margin-top: 1rem;
+
+    @include tablet {
+      font-size: 1.1rem;
+    }
+    &.description {
+      text-align: left;
+      white-space: pre-line;
+    }
+  }
+  strong {
+    color: $gamer-highlight;
+    display: inline-block;
+    margin-right: 0.5rem;
+    font-weight: 600;
+  }
+  .error {
+    color: $error-color;
+    text-align: center;
+    padding: 1rem;
+  }
+}

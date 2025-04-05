@@ -1,0 +1,78 @@
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
+
+.search-results {
+  background-color: $gamer-dark;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+  color: $gamer-light;
+
+  &__title {
+    text-align: center;
+    font-size: 1.5rem;
+    color: $gamer-accent;
+    margin-bottom: 1.5rem;
+    @include tablet {
+      font-size: 2rem;
+    }
+  }
+
+  &__grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__empty {
+    color: $secondary-color-muted;
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 2rem;
+  }
+}
+
+.game-card {
+  background-color: $secondary-color-grey;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  text-decoration: none;
+  color: $gamer-light;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 220px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 12px $gamer-accent;
+  }
+
+  &__image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+  }
+
+  &__info {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: bold;
+    color: $gamer-highlight;
+  }
+
+  p {
+    font-size: 0.85rem;
+    color: $secondary-color-muted;
+  }
+}

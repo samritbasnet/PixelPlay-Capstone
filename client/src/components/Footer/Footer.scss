@@ -1,0 +1,109 @@
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/typography' as *;
+
+.footer {
+  background-color: $secondary-color-grey;
+  padding: 3rem 1rem;
+  color: $secondary-color-white;
+  font-family: 'Orbitron', sans-serif;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+
+    @include tablet {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  &__col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: center;
+
+    @include tablet {
+      text-align: left;
+      max-width: 250px;
+    }
+  }
+
+  &__logo {
+    font-size: 1.5rem;
+    color: $gamer-highlight;
+    font-weight: 700;
+  }
+
+  &__description {
+    font-size: 0.875rem;
+    color: $secondary-color-muted;
+    line-height: 1.5;
+  }
+
+  &__heading {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $secondary-color-white;
+    border-left: 2px solid $gamer-accent;
+    padding-left: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    li a {
+      color: $secondary-color-muted;
+      font-size: 0.875rem;
+      text-decoration: none;
+
+      &:hover {
+        color: $gamer-accent;
+      }
+    }
+  }
+
+  &__socials {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+
+    @include tablet {
+      justify-content: flex-start;
+    }
+
+    a {
+      font-size: 1.25rem;
+      color: $secondary-color-muted;
+      transition: color 0.3s, transform 0.3s;
+
+      &:hover {
+        color: $gamer-accent;
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  &__bottom {
+    margin-top: 2rem;
+    text-align: center;
+
+    @include tablet {
+      text-align: right;
+    }
+
+    p {
+      font-size: 0.75rem;
+      color: $secondary-color-muted;
+    }
+  }
+}

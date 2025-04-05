@@ -1,0 +1,78 @@
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
+
+.pixelshelf {
+  background-color: $gamer-dark;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  color: $gamer-light;
+  font-family: 'Orbitron', sans-serif;
+
+  &__title {
+    text-align: center;
+    font-size: 2rem;
+    color: $gamer-accent;
+    margin-bottom: 2rem;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__card {
+    background-color: $secondary-color-grey;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  &__info {
+    padding: 1rem;
+
+    h2 {
+      font-size: 1.1rem;
+      color: $gamer-highlight;
+    }
+
+    p {
+      font-size: 0.85rem;
+      color: $secondary-color-muted;
+    }
+  }
+
+  &__empty {
+    text-align: center;
+    color: $secondary-color-muted;
+    font-size: 1.1rem;
+  }
+  .pixelshelf__remove-btn {
+    margin-top: 0.5rem;
+    background-color: #ff4655;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background-color: #ff3344;
+    }
+  }
+}
