@@ -49,11 +49,23 @@ const AdminDashboard = () => {
   };
 
   const handleAddGame = async () => {
+
+    const { title, description, genre, rating, imageUrl, releaseDate } = newGame;
+    if (!title || !description || !genre || !rating || !imageUrl || !releaseDate) {
+      toast.error('Please fill out all fields before adding a game.');
+      return;
+    }
+
+ 
+    console.log('Adding game with data:', newGame);
+
     try {
-      await axios.post(API_URL, newGame, {
+      const response = await axios.post(API_URL, newGame, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      console.log('Add game response:', response.data);
       toast.success('Game added successfully!');
+      // Clear the form
       setNewGame({
         title: '',
         description: '',
