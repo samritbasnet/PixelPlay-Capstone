@@ -41,9 +41,16 @@ function App() {
         />
         <Route
           path="/admin/dashboard"
-          element={isAuthenticated ? <AdminDashboard /> : <Navigate to="/admin/login" />}
+          element={
+            isAuthenticated ? (
+              <Layout>
+                <AdminDashboard />
+              </Layout>
+            ) : (
+              <Navigate to="/admin/login" />
+            )
+          }
         />
-
         <Route
           path="/"
           element={
