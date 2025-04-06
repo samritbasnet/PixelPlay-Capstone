@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './AdminDashboard.scss';
 
 const AdminDashboard = () => {
@@ -106,7 +107,7 @@ const AdminDashboard = () => {
   return (
     <div className="admin-dashboard">
       <ToastContainer position="top-right" autoClose={2500} />
-      <h1 className="admin-dashboard__title">Samrit Dashboard</h1>
+      <h1 className="admin-dashboard__title">Admin Dashboard</h1>
       <div className="admin-dashboard__add-form">
         <h2 className="admin-dashboard__add-form-title">Add New Game</h2>
         {['title', 'genre', 'rating', 'imageUrl', 'releaseDate'].map((field) => (
@@ -149,34 +150,36 @@ const AdminDashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {games.map((game) => (
-              <tr key={game.id}>
-                <td>{game.title}</td>
-                <td>{game.description}</td>
-                <td>{game.genre}</td>
-                <td>{game.rating}</td>
-                <td>
-                  <img src={game.image_url} alt={game.title} width="80" />
-                </td>
-                <td>{game.release_date}</td>
-                <td>
-                  <button
-                    onClick={() => handleEdit(game)}
-                    className="admin-dashboard__button"
-                    type="button"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(game.id)}
-                    className="admin-dashboard__button"
-                    type="button"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {games
+              .filter((game) => game.is_admin_created) // Only show admin-added games
+              .map((game) => (
+                <tr key={game.id}>
+                  <td>{game.title}</td>
+                  <td>{game.description}</td>
+                  <td>{game.genre}</td>
+                  <td>{game.rating}</td>
+                  <td>
+                    <img src={game.image_url} alt={game.title} width="80" />
+                  </td>
+                  <td>{game.release_date}</td>
+                  <td>
+                    <button
+                      onClick={() => handleEdit(game)}
+                      className="admin-dashboard__button"
+                      type="button"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(game.id)}
+                      className="admin-dashboard__button"
+                      type="button"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
@@ -204,10 +207,10 @@ const AdminDashboard = () => {
             onChange={(e) => setEditGame({ ...editGame, description: e.target.value })}
             className="admin-dashboard__textarea"
           />
-          <button onClick={handleUpdateGame} className="admin-dashboard__button">
+          <button onClick={handleUpdateGame} className="admin-dashboard__button" type='button'>
             Update
           </button>
-          <button onClick={() => setEditGame(null)} className="admin-dashboard__button">
+          <button onClick={() => setEditGame(null)} className="admin-dashboard__button" type='button'>
             Cancel
           </button>
         </div>
