@@ -6,7 +6,7 @@
   background-color: $secondary-color-grey;
   padding: 3rem 1rem;
   color: $secondary-color-white;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Roboto', sans-serif;
 
   &__container {
     max-width: 1200px;
@@ -65,6 +65,9 @@
       color: $secondary-color-muted;
       font-size: 0.875rem;
       text-decoration: none;
+      @include tablet {
+        font-size: 1rem;
+      }
 
       &:hover {
         color: $gamer-accent;
@@ -104,6 +107,9 @@
     p {
       font-size: 0.75rem;
       color: $secondary-color-muted;
+      @include tablet {
+        font-size: 1rem;
+      }
     }
   }
 }

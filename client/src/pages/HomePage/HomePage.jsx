@@ -1,4 +1,4 @@
-import Footer from '../../components/Footer/Footer';
+
 import LatestNews from '../../components/LatestNews/LatestNews';
 import GameList from '../GameList/GameList';
 import './HomePage.scss';
@@ -21,7 +21,7 @@ const HomePage = () => {
       <div id="news">
         <LatestNews />
       </div>
-      <Footer />
+
     </div>
   );
 };
