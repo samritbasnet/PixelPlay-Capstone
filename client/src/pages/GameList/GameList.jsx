@@ -92,12 +92,12 @@ const GameList = () => {
             {game.background_image ? (
               <img
                 src={game.background_image}
-                alt={game.name}
+                alt={game.title || game.name}
                 className="game-card__image"
               />
             ) : null}
             <div className="game-card__info">
-              <h2 className="game-card__title">{game.name}</h2>
+              <h2 className="game-card__title">{game.title || game.name}</h2>
               <p className="game-card__rating">⭐ {game.rating}</p>
               <p className="game-card__release">Released: {game.released}</p>
               <button
