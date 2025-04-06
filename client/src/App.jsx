@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 import NavBar from './components/NavBar/NavBar';
 import AdminDashboard from './pages/AdminDashboard/AdminDashboard.jsx';
-import AdminLogin from './pages/AdminLoginPage/AdminLoginPage.Jsx';
+import AdminLoginPage from './pages/AdminLoginPage/AdminLoginPage.jsx';
 import GameDetail from './pages/GameDetailsPage/GameDetail.jsx';
 import GameList from './pages/GameList/GameList.jsx';
 import HomePage from './pages/HomePage/HomePage.jsx';
@@ -29,7 +29,7 @@ function App() {
         <Routes>
           <Route
             path="/admin/login"
-            element={<AdminLogin onLogin={() => setIsAuthenticated(true)} />}
+            element={<AdminLoginPage onLogin={() => setIsAuthenticated(true)} />}
           />
           <Route path="/search" element={<SearchResults />} />
 
