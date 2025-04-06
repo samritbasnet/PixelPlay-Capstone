@@ -1,10 +1,8 @@
-import { supabase } from '../supabaseClient.js';
 import axios from 'axios';
-
+import { supabase } from '../supabaseClient.js';
 
 export const getGames = async (req, res) => {
   try {
-
     const { data: adminGames, error: supabaseError } = await supabase
       .from('games')
       .select('*');
@@ -20,7 +18,6 @@ export const getGames = async (req, res) => {
       description: game.description,
       source: 'admin',
     }));
-
 
     const rawgRes = await axios.get(
       `https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&page_size=12`
@@ -45,7 +42,6 @@ export const getGames = async (req, res) => {
   }
 };
 
-
 export const getGameById = async (req, res) => {
   const { id } = req.params;
   const { data, error } = await supabase.from('games').select('*').eq('id', id).single();
@@ -53,7 +49,6 @@ export const getGameById = async (req, res) => {
   if (error) return res.status(404).json({ error: 'Game not found' });
   res.json(data);
 };
-
 
 export const addGame = async (req, res) => {
   const { title, description, genre, rating, imageUrl, releaseDate } = req.body;
@@ -76,7 +71,6 @@ export const addGame = async (req, res) => {
 
   res.status(201).json(data);
 };
-
 
 export const updateGame = async (req, res) => {
   const { id } = req.params;
