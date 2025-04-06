@@ -159,7 +159,7 @@ const AdminDashboard = () => {
           <tbody>
             {games
               
-               .filter((game) => game.is_admin_created)
+              //  .filter((game) => game.is_admin_created)
               .map((game) => (
                 <tr key={game.id}>
                   <td>{game.title}</td>
