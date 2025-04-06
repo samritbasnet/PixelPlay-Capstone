@@ -29,7 +29,7 @@ const LoginForm = ({ onLogin }) => {
         onSubmit={async (values, { setSubmitting, setErrors }) => {
           try {
             const response = await axios.post(
-              'http://localhost:8081/api/admin/login',
+              'https://pixelplay-capstone.onrender.com/api/admin/login',
               values
             );
             localStorage.setItem('token', response.data.token);
