@@ -15,11 +15,16 @@ export const loginAdmin = async (req, res) => {
       .eq('email', email)
       .single();
 
-    if (error || !adminData) {
+    if (error) {
+      console.error('Supabase error:', error.message);
+      return res.status(500).json({ message: 'Server error' });
+    }
+
+    if (!adminData) {
       return res.status(401).json({ message: 'Admin not found' });
     }
 
-    const valid = bcrypt.compareSync(password, adminData.password);
+    const valid = bcrypt.compare(password, adminData.password);
     if (!valid) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
