@@ -8,6 +8,7 @@
   color: $gamer-light;
   min-height: 100vh;
   font-family: 'Orbitron', sans-serif;
+
   &__title {
     font-size: 1.5rem;
     font-weight: 700;
@@ -18,6 +19,7 @@
       font-size: 2rem;
     }
   }
+
   &__add-form,
   &__edit-form {
     background-color: $secondary-color-grey;
@@ -32,12 +34,14 @@
       max-width: 50rem;
       margin: 2rem auto;
     }
+
     &-title {
       font-size: 1.2rem;
       color: $gamer-highlight;
       margin-bottom: 0.5rem;
     }
   }
+
   &__input,
   &__textarea {
     background-color: $secondary-color-light;
@@ -51,9 +55,11 @@
       color: $secondary-color-muted;
     }
   }
+
   &__textarea {
     min-height: 6.25rem;
   }
+
   &__button {
     background: $gamer-gradient;
     color: $gamer-light;
@@ -61,16 +67,17 @@
     padding: 0.75rem 1.5rem;
     font-weight: 600;
     font-size: 0.9rem;
-    border: none;
     border-radius: 0.25rem;
     cursor: pointer;
     transition: background 0.3s ease;
     align-self: center;
     margin-top: 1rem;
+
     &:hover {
       background: linear-gradient(90deg, #8a2be2, #ff4655);
     }
   }
+
   &__game-list {
     padding: 1rem;
     border-radius: 0.5rem;
@@ -80,39 +87,48 @@
       padding: 2rem;
       max-width: 100%;
     }
+
     &-title {
       font-size: 1.2rem;
       margin-bottom: 1rem;
       text-align: center;
       color: $gamer-highlight;
     }
+
     table {
       width: 100%;
-      font-family: 'Inter', sans-serif;
       border-collapse: collapse;
+      font-family: 'Inter', sans-serif;
       font-size: 16px;
       background-color: $secondary-color-grey;
       border-radius: 0.5rem;
       overflow: hidden;
+
       th,
       td {
         padding: 0.75rem;
         text-align: left;
         color: $gamer-light;
+        white-space: normal;      
+        word-break: break-word;  
       }
+
       th {
         background-color: $primary-color-purple;
         color: $gamer-light;
         font-weight: 600;
         white-space: nowrap;
       }
+
       tr:last-child td {
         border-bottom: none;
       }
+
       img {
         border-radius: 4px;
         max-width: 4rem;
       }
+
       button {
         background: $gamer-gradient;
         color: white;
