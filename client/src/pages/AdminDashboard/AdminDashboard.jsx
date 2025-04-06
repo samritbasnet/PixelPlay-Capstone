@@ -12,8 +12,8 @@ const AdminDashboard = () => {
     description: '',
     genre: '',
     rating: '',
-    imageUrl: '',
-    releaseDate: '',
+    image_url: '',
+    release_date: '',
   });
   const [editGame, setEditGame] = useState(null);
   const navigate = useNavigate();
@@ -51,7 +51,11 @@ const AdminDashboard = () => {
 
   const handleAddGame = async () => {
     try {
-      await axios.post(API_URL, newGame, {
+      const gameToAdd = {
+        ...newGame,
+        is_admin_created: true, 
+      };
+      await axios.post(API_URL, gameToAdd, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setNewGame({
@@ -59,8 +63,8 @@ const AdminDashboard = () => {
         description: '',
         genre: '',
         rating: '',
-        imageUrl: '',
-        releaseDate: '',
+        image_url: '',
+        release_date: '',
       });
       fetchGames();
     } catch (error) {
@@ -88,8 +92,8 @@ const AdminDashboard = () => {
   };
 
   const handleDelete = async (id) => {
-    const confirm = window.confirm('Are you sure you want to delete this game?');
-    if (!confirm) return;
+    const confirmDelete = window.confirm('Are you sure you want to delete this game?');
+    if (!confirmDelete) return;
     try {
       await axios.delete(`${API_URL}/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -108,16 +112,18 @@ const AdminDashboard = () => {
     <div className="admin-dashboard">
       <ToastContainer position="top-right" autoClose={2500} />
       <h1 className="admin-dashboard__title">Admin Dashboard</h1>
+
+
       <div className="admin-dashboard__add-form">
         <h2 className="admin-dashboard__add-form-title">Add New Game</h2>
-        {['title', 'genre', 'rating', 'imageUrl', 'releaseDate'].map((field) => (
+        {['title', 'genre', 'rating', 'image_url', 'release_date'].map((field) => (
           <input
             key={field}
             type={
-              field === 'rating' ? 'number' : field === 'releaseDate' ? 'date' : 'text'
+              field === 'rating' ? 'number' : field === 'release_date' ? 'date' : 'text'
             }
             name={field}
-            placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+            placeholder={field.replace('_', ' ').toUpperCase()}
             value={newGame[field]}
             onChange={handleChange}
             className="admin-dashboard__input"
@@ -135,6 +141,7 @@ const AdminDashboard = () => {
         </button>
       </div>
 
+
       <div className="admin-dashboard__game-list">
         <h2 className="admin-dashboard__game-list-title">Game List</h2>
         <table className="admin-dashboard__table">
@@ -145,13 +152,14 @@ const AdminDashboard = () => {
               <th>Genre</th>
               <th>Rating</th>
               <th>Image</th>
-              <th>Release</th>
+              <th>Release Date</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {games
-              .filter((game) => game.is_admin_created) 
+              
+               .filter((game) => game.is_admin_created)
               .map((game) => (
                 <tr key={game.id}>
                   <td>{game.title}</td>
@@ -184,14 +192,15 @@ const AdminDashboard = () => {
         </table>
       </div>
 
+
       {editGame && (
         <div className="admin-dashboard__edit-form">
           <h2 className="admin-dashboard__edit-form-title">Edit Game</h2>
-          {['title', 'genre', 'rating', 'imageUrl', 'releaseDate'].map((field) => (
+          {['title', 'genre', 'rating', 'image_url', 'release_date'].map((field) => (
             <input
               key={field}
               type={
-                field === 'rating' ? 'number' : field === 'releaseDate' ? 'date' : 'text'
+                field === 'rating' ? 'number' : field === 'release_date' ? 'date' : 'text'
               }
               name={field}
               value={editGame[field]}
@@ -207,10 +216,18 @@ const AdminDashboard = () => {
             onChange={(e) => setEditGame({ ...editGame, description: e.target.value })}
             className="admin-dashboard__textarea"
           />
-          <button onClick={handleUpdateGame} className="admin-dashboard__button" type='button'>
+          <button
+            onClick={handleUpdateGame}
+            className="admin-dashboard__button"
+            type="button"
+          >
             Update
           </button>
-          <button onClick={() => setEditGame(null)} className="admin-dashboard__button" type='button'>
+          <button
+            onClick={() => setEditGame(null)}
+            className="admin-dashboard__button"
+            type="button"
+          >
             Cancel
           </button>
         </div>
