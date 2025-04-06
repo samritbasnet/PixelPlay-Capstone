@@ -53,7 +53,7 @@ const AdminDashboard = () => {
     try {
       const gameToAdd = {
         ...newGame,
-        is_admin_created: true, 
+        is_admin_created: true,
       };
       await axios.post(API_URL, gameToAdd, {
         headers: { Authorization: `Bearer ${token}` },
@@ -113,7 +113,7 @@ const AdminDashboard = () => {
       <ToastContainer position="top-right" autoClose={2500} />
       <h1 className="admin-dashboard__title">Admin Dashboard</h1>
 
-
+      
       <div className="admin-dashboard__add-form">
         <h2 className="admin-dashboard__add-form-title">Add New Game</h2>
         {['title', 'genre', 'rating', 'image_url', 'release_date'].map((field) => (
@@ -141,7 +141,7 @@ const AdminDashboard = () => {
         </button>
       </div>
 
-
+      
       <div className="admin-dashboard__game-list">
         <h2 className="admin-dashboard__game-list-title">Game List</h2>
         <table className="admin-dashboard__table">
@@ -158,8 +158,7 @@ const AdminDashboard = () => {
           </thead>
           <tbody>
             {games
-              
-              //  .filter((game) => game.is_admin_created)
+              .filter((game) => game.is_admin_created)
               .map((game) => (
                 <tr key={game.id}>
                   <td>{game.title}</td>
@@ -192,7 +191,7 @@ const AdminDashboard = () => {
         </table>
       </div>
 
-
+      
       {editGame && (
         <div className="admin-dashboard__edit-form">
           <h2 className="admin-dashboard__edit-form-title">Edit Game</h2>
