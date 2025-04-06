@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import './GameList.scss';
 
-const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 const BACKEND_API_URL = import.meta.env.VITE_API_BASE_URL;
 
 const GameList = () => {
@@ -23,7 +22,7 @@ const GameList = () => {
       try {
         const res = await axios.get(`${BACKEND_API_URL}/games`);
         const combinedGames = res.data;
-  
+
         if (sortOption === 'rating') {
           combinedGames.sort((a, b) => b.rating - a.rating);
         } else if (sortOption === 'release') {
@@ -33,30 +32,29 @@ const GameList = () => {
               new Date(a.released || a.release_date)
           );
         }
-  
+
         setGames(combinedGames);
       } catch (error) {
         console.error('Error fetching games:', error);
         toast.error('Failed to load games');
       }
     };
-  
+
     fetchGames();
   }, [sortOption]);
-  
 
   const handleFavorite = (e, game) => {
     e.preventDefault();
     e.stopPropagation();
 
     const alreadyAdded = favorites.find((g) => g.id === game.id);
-    let updated;
+    const updated = alreadyAdded
+      ? favorites.filter((g) => g.id !== game.id)
+      : [...favorites, game];
 
     if (alreadyAdded) {
-      updated = favorites.filter((g) => g.id !== game.id);
       toast.info(`${game.name} removed from PixelShelf`);
     } else {
-      updated = [...favorites, game];
       toast.success(`${game.name} added to PixelShelf`);
     }
 
