@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './App.scss';
+import Footer from './components/Footer/Footer';
 import NavBar from './components/NavBar/NavBar';
 import AdminDashboard from './pages/AdminDashboard/AdminDashboard.jsx';
 import AdminLogin from './pages/AdminLoginPage/AdminLoginPage.Jsx';
@@ -11,6 +11,17 @@ import GameList from './pages/GameList/GameList.jsx';
 import HomePage from './pages/HomePage/HomePage.jsx';
 import PixelShelf from './pages/PixelShelf/PixelShelf.jsx';
 import SearchResults from './pages/SearchResult/SearchResults.jsx';
+
+import './App.scss';
+
+const Layout = ({ children }) => (
+  <>
+    <NavBar />
+    {children}
+    <Footer />
+  </>
+);
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
 
@@ -21,33 +32,62 @@ function App() {
   }, []);
 
   return (
-    <main>
-      <ToastContainer position="top-right" autoClose={3000} theme="dark" />
-      <BrowserRouter>
-        <NavBar />
-        <ToastContainer position="top-right" autoClose={4000} theme="dark" />{' '}
-        <Routes>
-          <Route
-            path="/admin/login"
-            element={<AdminLogin onLogin={() => setIsAuthenticated(true)} />}
-          />
-          <Route path="/search" element={<SearchResults />} />
+    <BrowserRouter>
+      <ToastContainer position="top-right" autoClose={4000} theme="dark" />
+      <Routes>
+        <Route
+          path="/admin/login"
+          element={<AdminLogin onLogin={() => setIsAuthenticated(true)} />}
+        />
+        <Route
+          path="/admin/dashboard"
+          element={isAuthenticated ? <AdminDashboard /> : <Navigate to="/admin/login" />}
+        />
 
-          <Route
-            path="/admin/dashboard"
-            element={
-              isAuthenticated ? <AdminDashboard /> : <Navigate to="/admin/login" />
-            }
-          />
-          <Route path="/" element={<HomePage />} />
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <HomePage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/games"
+          element={
+            <Layout>
+              <GameList />
+            </Layout>
+          }
+        />
+        <Route
+          path="/game/:id"
+          element={
+            <Layout>
+              <GameDetail />
+            </Layout>
+          }
+        />
+        <Route
+          path="/wishlist"
+          element={
+            <Layout>
+              <PixelShelf />
+            </Layout>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <Layout>
+              <SearchResults />
+            </Layout>
+          }
+        />
 
-          <Route path="/" element={<Navigate to="/games" />} />
-          <Route path="/games" element={<GameList />} />
-          <Route path="/game/:id" element={<GameDetail />} />
-          <Route path="/wishlist" element={<PixelShelf />} />
-        </Routes>
-      </BrowserRouter>
-    </main>
+        <Route path="/" element={<Navigate to="/games" />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
