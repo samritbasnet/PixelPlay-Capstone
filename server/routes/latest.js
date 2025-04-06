@@ -5,11 +5,9 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    console.log('📦 Fetching RAWG latest games...');
     const RAWG_API_KEY = process.env.RAWG_API_KEY;
 
     if (!RAWG_API_KEY) {
-      console.warn('⚠️ RAWG API KEY is missing!');
       return res.status(500).json({ error: 'RAWG API key not found on server' });
     }
 

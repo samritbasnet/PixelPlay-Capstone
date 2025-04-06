@@ -19,6 +19,7 @@ export const getGames = async (req, res) => {
       rating: game.rating,
       released: game.release_date,
       description: game.description,
+      genre: game.genre,
       source: 'admin',
     }));
 
@@ -27,7 +28,7 @@ export const getGames = async (req, res) => {
     );
 
     const rawgGames = rawgRes.data.results.map((game) => ({
-      id: String(game.id), 
+      id: String(game.id),
       title: game.name,
       background_image: game.background_image,
       rating: game.rating,
@@ -48,8 +49,14 @@ export const getGames = async (req, res) => {
 export const getGameById = async (req, res) => {
   const { id } = req.params;
 
-  const numericId = id.startsWith('admin-') ? Number.parseInt(id.replace('admin-', ''), 10) : id;
-  const { data, error } = await supabase.from('games').select('*').eq('id', numericId).single();
+  const numericId = id.startsWith('admin-')
+    ? Number.parseInt(id.replace('admin-', ''), 10)
+    : id;
+  const { data, error } = await supabase
+    .from('games')
+    .select('*')
+    .eq('id', numericId)
+    .single();
 
   if (error) {
     console.error('Supabase error fetching game by ID:', error);
@@ -72,7 +79,7 @@ export const addGame = async (req, res) => {
     rating: Number.parseFloat(rating),
     image_url: imageUrl,
     release_date: releaseDate,
-    source: 'admin', 
+    source: 'admin',
   };
 
   try {
@@ -83,7 +90,7 @@ export const addGame = async (req, res) => {
       return res.status(500).json({ error: error.message });
     }
 
-    res.status(201).json(data[0]); 
+    res.status(201).json(data[0]);
   } catch (err) {
     console.error('Error adding game:', err);
     res.status(500).json({ error: 'Failed to add game.' });
@@ -97,7 +104,7 @@ export const updateGame = async (req, res) => {
     return res.status(400).json({ error: 'Cannot update RAWG games.' });
   }
 
-  const numericId = Number.parseInt(id.replace('admin-', ''), 10);
+  const supabaseId = id.replace('admin-', '');
   const { title, description, genre, rating, imageUrl, releaseDate } = req.body;
 
   if (!title || !description || !genre || !rating || !imageUrl || !releaseDate) {
@@ -117,8 +124,8 @@ export const updateGame = async (req, res) => {
     const { data, error } = await supabase
       .from('games')
       .update(updatedGame)
-      .eq('id', numericId)
-      .select(); 
+      .eq('id', supabaseId)
+      .select();
 
     if (error) {
       console.error('Supabase error updating game:', error);
@@ -129,7 +136,7 @@ export const updateGame = async (req, res) => {
       return res.status(404).json({ error: 'Game not found for update.' });
     }
 
-    res.json(data[0]); 
+    res.json(data[0]);
   } catch (err) {
     console.error('Error updating game:', err);
     res.status(500).json({ error: 'Failed to update game.' });
@@ -143,10 +150,10 @@ export const deleteGame = async (req, res) => {
     return res.status(400).json({ error: 'Cannot delete RAWG games.' });
   }
 
-  const numericId = Number.parseInt(id.replace('admin-', ''), 10);
+  const supabaseId = id.replace('admin-', '');
 
   try {
-    const { error } = await supabase.from('games').delete().eq('id', numericId);
+    const { error } = await supabase.from('games').delete().eq('id', supabaseId); // Use supabaseId here
 
     if (error) {
       console.error('Supabase error deleting game:', error);
