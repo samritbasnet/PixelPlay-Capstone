@@ -53,6 +53,7 @@ const AdminDashboard = () => {
       await axios.post(API_URL, newGame, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      toast.success('Game added successfully!');
       setNewGame({
         title: '',
         description: '',
@@ -69,12 +70,34 @@ const AdminDashboard = () => {
   };
 
   const handleEdit = (game) => {
-    setEditGame(game);
+    if (game.source !== 'admin') {
+      toast.error('Cannot edit non-admin game.');
+      return;
+    }
+    setEditGame({
+      ...game,
+      imageUrl: game.background_image,
+      releaseDate: game.released,
+    });
+  };
+
+  const handleEditFieldChange = (e) => {
+    const { name, value } = e.target;
+    setEditGame((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleUpdateGame = async () => {
     try {
-      await axios.put(`${API_URL}/${editGame.id}`, editGame, {
+      const updatedGame = {
+        title: editGame.title,
+        description: editGame.description,
+        genre: editGame.genre,
+        rating: Number.parseFloat(editGame.rating),
+        imageUrl: editGame.imageUrl,
+        releaseDate: editGame.releaseDate,
+      };
+
+      await axios.put(`${API_URL}/${editGame.id}`, updatedGame, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Game updated successfully!');
@@ -86,9 +109,12 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    const confirm = window.confirm('Are you sure you want to delete this game?');
-    if (!confirm) return;
+  const handleDelete = async (id, source) => {
+    if (source !== 'admin') {
+      toast.error('Cannot delete non-admin game.');
+      return;
+    }
+    if (!window.confirm('Are you sure you want to delete this game?')) return;
     try {
       await axios.delete(`${API_URL}/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -106,7 +132,8 @@ const AdminDashboard = () => {
   return (
     <div className="admin-dashboard">
       <ToastContainer position="top-right" autoClose={2500} />
-      <h1 className="admin-dashboard__title">Samrit Dashboard</h1>
+      <h1 className="admin-dashboard__title">Admin Dashboard</h1>
+
       <div className="admin-dashboard__add-form">
         <h2 className="admin-dashboard__add-form-title">Add New Game</h2>
         {['title', 'genre', 'rating', 'imageUrl', 'releaseDate'].map((field) => (
@@ -153,27 +180,37 @@ const AdminDashboard = () => {
               <tr key={game.id}>
                 <td>{game.title}</td>
                 <td>{game.description}</td>
-                <td>{game.genre}</td>
+                <td>
+                  {game.source === 'admin'
+                    ? game.genre
+                    : game.genres?.map((g) => g.name).join(', ')}
+                </td>
                 <td>{game.rating}</td>
                 <td>
-                  <img src={game.image_url} alt={game.title} width="80" />
+                  {game.background_image ? (
+                    <img src={game.background_image} alt={game.title} width="80" />
+                  ) : null}
                 </td>
-                <td>{game.release_date}</td>
+                <td>{game.released}</td>
                 <td>
-                  <button
-                    onClick={() => handleEdit(game)}
-                    className="admin-dashboard__button"
-                    type="button"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(game.id)}
-                    className="admin-dashboard__button"
-                    type="button"
-                  >
-                    Delete
-                  </button>
+                  {game.source === 'admin' && (
+                    <>
+                      <button
+                        onClick={() => handleEdit(game)}
+                        className="admin-dashboard__button"
+                        type="button"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(game.id, game.source)}
+                        className="admin-dashboard__button"
+                        type="button"
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}
@@ -192,22 +229,28 @@ const AdminDashboard = () => {
               }
               name={field}
               value={editGame[field]}
-              onChange={(e) =>
-                setEditGame((prev) => ({ ...prev, [field]: e.target.value }))
-              }
+              onChange={handleEditFieldChange}
               className="admin-dashboard__input"
             />
           ))}
           <textarea
             name="description"
             value={editGame.description}
-            onChange={(e) => setEditGame({ ...editGame, description: e.target.value })}
+            onChange={handleEditFieldChange}
             className="admin-dashboard__textarea"
           />
-          <button onClick={handleUpdateGame} className="admin-dashboard__button">
+          <button
+            onClick={handleUpdateGame}
+            className="admin-dashboard__button"
+            type="button"
+          >
             Update
           </button>
-          <button onClick={() => setEditGame(null)} className="admin-dashboard__button">
+          <button
+            onClick={() => setEditGame(null)}
+            className="admin-dashboard__button"
+            type="button"
+          >
             Cancel
           </button>
         </div>
