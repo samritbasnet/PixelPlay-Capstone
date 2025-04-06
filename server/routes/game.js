@@ -6,13 +6,14 @@ import {
   getGames,
   updateGame,
 } from '../controllers/gameController.js';
+import authorizeAdmin from '../middleware/authorizeAdmin.js';
 
 const router = express.Router();
 
 router.get('/', getGames);
 router.get('/:id', getGameById);
-router.post('/', addGame);
-router.put('/:id', updateGame);
-router.delete('/:id', deleteGame);
+router.post('/', authorizeAdmin, addGame);
+router.put('/:id', authorizeAdmin, updateGame);
+router.delete('/:id', authorizeAdmin, deleteGame);
 
 export default router;

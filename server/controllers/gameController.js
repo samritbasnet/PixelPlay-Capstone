@@ -7,11 +7,14 @@ export const getGames = async (req, res) => {
       .from('games')
       .select('*');
 
-    if (supabaseError) throw supabaseError;
+    if (supabaseError) {
+      console.error('Supabase error fetching admin games:', supabaseError);
+      return res.status(500).json({ error: 'Failed to load admin games' });
+    }
 
     const formattedAdminGames = adminGames.map((game) => ({
       id: `admin-${game.id}`,
-      name: game.title,
+      title: game.title,
       background_image: game.image_url,
       rating: game.rating,
       released: game.release_date,
@@ -24,8 +27,8 @@ export const getGames = async (req, res) => {
     );
 
     const rawgGames = rawgRes.data.results.map((game) => ({
-      id: game.id,
-      name: game.name,
+      id: String(game.id), 
+      title: game.name,
       background_image: game.background_image,
       rating: game.rating,
       released: game.released,
@@ -44,14 +47,23 @@ export const getGames = async (req, res) => {
 
 export const getGameById = async (req, res) => {
   const { id } = req.params;
-  const { data, error } = await supabase.from('games').select('*').eq('id', id).single();
 
-  if (error) return res.status(404).json({ error: 'Game not found' });
+  const numericId = id.startsWith('admin-') ? Number.parseInt(id.replace('admin-', ''), 10) : id;
+  const { data, error } = await supabase.from('games').select('*').eq('id', numericId).single();
+
+  if (error) {
+    console.error('Supabase error fetching game by ID:', error);
+    return res.status(404).json({ error: 'Game not found' });
+  }
   res.json(data);
 };
 
 export const addGame = async (req, res) => {
   const { title, description, genre, rating, imageUrl, releaseDate } = req.body;
+
+  if (!title || !description || !genre || !rating || !imageUrl || !releaseDate) {
+    return res.status(400).json({ error: 'All fields are required to add a game.' });
+  }
 
   const game = {
     title,
@@ -60,21 +72,37 @@ export const addGame = async (req, res) => {
     rating: Number.parseFloat(rating),
     image_url: imageUrl,
     release_date: releaseDate,
+    source: 'admin', 
   };
 
-  const { data, error } = await supabase.from('games').insert([game]);
+  try {
+    const { data, error } = await supabase.from('games').insert([game]).select();
 
-  if (error) {
-    console.error('Error inserting game:', error);
-    return res.status(500).json({ error: error.message });
+    if (error) {
+      console.error('Supabase error inserting game:', error);
+      return res.status(500).json({ error: error.message });
+    }
+
+    res.status(201).json(data[0]); 
+  } catch (err) {
+    console.error('Error adding game:', err);
+    res.status(500).json({ error: 'Failed to add game.' });
   }
-
-  res.status(201).json(data);
 };
 
 export const updateGame = async (req, res) => {
   const { id } = req.params;
+
+  if (!id.startsWith('admin-')) {
+    return res.status(400).json({ error: 'Cannot update RAWG games.' });
+  }
+
+  const numericId = Number.parseInt(id.replace('admin-', ''), 10);
   const { title, description, genre, rating, imageUrl, releaseDate } = req.body;
+
+  if (!title || !description || !genre || !rating || !imageUrl || !releaseDate) {
+    return res.status(400).json({ error: 'All fields are required to update a game.' });
+  }
 
   const updatedGame = {
     title,
@@ -85,24 +113,49 @@ export const updateGame = async (req, res) => {
     release_date: releaseDate,
   };
 
-  const { data, error } = await supabase.from('games').update(updatedGame).eq('id', id);
+  try {
+    const { data, error } = await supabase
+      .from('games')
+      .update(updatedGame)
+      .eq('id', numericId)
+      .select(); 
 
-  if (error) {
-    console.error('Error updating game:', error);
-    return res.status(500).json({ error: error.message });
+    if (error) {
+      console.error('Supabase error updating game:', error);
+      return res.status(500).json({ error: error.message });
+    }
+
+    if (!data || data.length === 0) {
+      return res.status(404).json({ error: 'Game not found for update.' });
+    }
+
+    res.json(data[0]); 
+  } catch (err) {
+    console.error('Error updating game:', err);
+    res.status(500).json({ error: 'Failed to update game.' });
   }
-
-  res.json(data);
 };
 
 export const deleteGame = async (req, res) => {
   const { id } = req.params;
-  const { error } = await supabase.from('games').delete().eq('id', id);
 
-  if (error) {
-    console.error('Error deleting game:', error);
-    return res.status(500).json({ error: error.message });
+  if (!id.startsWith('admin-')) {
+    return res.status(400).json({ error: 'Cannot delete RAWG games.' });
   }
 
-  res.json({ message: 'Game deleted' });
+  const numericId = Number.parseInt(id.replace('admin-', ''), 10);
+
+  try {
+    const { error } = await supabase.from('games').delete().eq('id', numericId);
+
+    if (error) {
+      console.error('Supabase error deleting game:', error);
+      return res.status(500).json({ error: error.message });
+    }
+
+    res.json({ message: 'Game deleted successfully' });
+  } catch (err) {
+    console.error('Error deleting game:', err);
+    res.status(500).json({ error: 'Failed to delete game.' });
+  }
 };
