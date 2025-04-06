@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react';
 import './LatestNews.scss';
 
+const BACKEND_API_URL = import.meta.env.VITE_API_BASE_URL;
+
 const LatestNews = () => {
   const [games, setGames] = useState([]);
 
   useEffect(() => {
     const fetchLatestGames = async () => {
       try {
-        const res = await fetch(
-          `https://api.rawg.io/api/games?key=${
-            import.meta.env.VITE_RAWG_API_KEY
-          }&dates=2025-01-01,2025-12-31&ordering=-released&page_size=6`
-        );
+        const res = await fetch(`${BACKEND_API_URL}/latest`);
         const data = await res.json();
-        const filteredGames = data.results.filter((game) => game.background_image);
+        const filteredGames = data.filter((game) => game.background_image);
         setGames(filteredGames);
       } catch (err) {
         console.error('Failed to fetch game news:', err);

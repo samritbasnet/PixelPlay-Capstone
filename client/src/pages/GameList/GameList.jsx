@@ -21,34 +21,9 @@ const GameList = () => {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const rawgRes = await axios.get(
-          `https://api.rawg.io/api/games?key=${RAWG_API_KEY}&page_size=12`
-        );
-        const adminRes = await axios.get(`${BACKEND_API_URL}/games`);
-
-        const rawgGames = rawgRes.data.results.map((game) => ({
-          id: game.id,
-          name: game.name,
-          background_image: game.background_image,
-          rating: game.rating,
-          released: game.released,
-          genres: game.genres,
-          description: game.slug,
-          source: 'rawg',
-        }));
-
-        const adminGames = adminRes.data.map((game) => ({
-          id: `admin-${game.id}`,
-          name: game.title,
-          background_image: game.image_url,
-          rating: game.rating,
-          released: game.release_date,
-          description: game.description,
-          source: 'admin',
-        }));
-
-        const combinedGames = [...adminGames, ...rawgGames];
-
+        const res = await axios.get(`${BACKEND_API_URL}/games`);
+        const combinedGames = res.data;
+  
         if (sortOption === 'rating') {
           combinedGames.sort((a, b) => b.rating - a.rating);
         } else if (sortOption === 'release') {
@@ -58,16 +33,17 @@ const GameList = () => {
               new Date(a.released || a.release_date)
           );
         }
-
+  
         setGames(combinedGames);
       } catch (error) {
         console.error('Error fetching games:', error);
         toast.error('Failed to load games');
       }
     };
-
+  
     fetchGames();
   }, [sortOption]);
+  
 
   const handleFavorite = (e, game) => {
     e.preventDefault();
