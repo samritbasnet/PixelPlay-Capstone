@@ -68,9 +68,11 @@ export const getGameById = async (req, res) => {
 export const addGame = async (req, res) => {
   const { title, description, genre, rating, imageUrl, releaseDate } = req.body;
 
+
   if (!title || !description || !genre || !rating || !imageUrl || !releaseDate) {
     return res.status(400).json({ error: 'All fields are required to add a game.' });
   }
+
 
   const game = {
     title,
@@ -83,13 +85,17 @@ export const addGame = async (req, res) => {
   };
 
   try {
+
+    console.log('Attempting to add game:', game);
     const { data, error } = await supabase.from('games').insert([game]).select();
 
     if (error) {
       console.error('Supabase error inserting game:', error);
+   
       return res.status(500).json({ error: error.message });
     }
 
+    console.log('Game added successfully:', data[0]);
     res.status(201).json(data[0]);
   } catch (err) {
     console.error('Error adding game:', err);
@@ -153,7 +159,7 @@ export const deleteGame = async (req, res) => {
   const supabaseId = id.replace('admin-', '');
 
   try {
-    const { error } = await supabase.from('games').delete().eq('id', supabaseId); // Use supabaseId here
+    const { error } = await supabase.from('games').delete().eq('id', supabaseId);
 
     if (error) {
       console.error('Supabase error deleting game:', error);
