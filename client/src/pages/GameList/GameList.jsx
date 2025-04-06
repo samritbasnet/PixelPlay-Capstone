@@ -47,15 +47,17 @@ const GameList = () => {
     e.preventDefault();
     e.stopPropagation();
 
+    const gameTitle = game.title || game.name;
+
     const alreadyAdded = favorites.find((g) => g.id === game.id);
     const updated = alreadyAdded
       ? favorites.filter((g) => g.id !== game.id)
       : [...favorites, game];
 
     if (alreadyAdded) {
-      toast.info(`${game.name} removed from PixelShelf`);
+      toast.info(`${gameTitle} removed from PixelShelf`);
     } else {
-      toast.success(`${game.name} added to PixelShelf`);
+      toast.success(`${gameTitle} added to PixelShelf`);
     }
 
     setFavorites(updated);
@@ -87,11 +89,13 @@ const GameList = () => {
       <div className="game-list__grid">
         {games.map((game) => (
           <Link to={`/game/${game.id}`} key={game.id} className="game-card">
-            <img
-              src={game.background_image}
-              alt={game.name}
-              className="game-card__image"
-            />
+            {game.background_image ? (
+              <img
+                src={game.background_image}
+                alt={game.name}
+                className="game-card__image"
+              />
+            ) : null}
             <div className="game-card__info">
               <h2 className="game-card__title">{game.name}</h2>
               <p className="game-card__rating">⭐ {game.rating}</p>
