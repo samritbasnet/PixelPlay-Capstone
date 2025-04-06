@@ -17,7 +17,9 @@ const PixelShelf = () => {
     const updated = favorites.filter((game) => game.id !== gameToRemove.id);
     setFavorites(updated);
     localStorage.setItem('pixelshelf', JSON.stringify(updated));
-    toast.info(`🗑️ "${gameToRemove.name}" removed from your PixelShelf!`);
+
+    const displayName = gameToRemove.title || gameToRemove.name;
+    toast.info(`🗑️ "${displayName}" removed from your PixelShelf!`);
   };
 
   return (
@@ -31,13 +33,15 @@ const PixelShelf = () => {
           <div className="pixelshelf__grid">
             {favorites.map((game) => (
               <div className="pixelshelf__card" key={game.id}>
-                <img
-                  src={game.background_image || game.imageUrl}
-                  alt={game.name}
-                  className="pixelshelf__image"
-                />
+                {game.background_image || game.imageUrl ? (
+                  <img
+                    src={game.background_image || game.imageUrl}
+                    alt={game.title || game.name}
+                    className="pixelshelf__image"
+                  />
+                ) : null}
                 <div className="pixelshelf__info">
-                  <h2 className="pixelshelf__name">{game.name}</h2>
+                  <h2 className="pixelshelf__name">{game.title || game.name}</h2>
                   <p className="pixelshelf__rating">⭐ {game.rating}</p>
                   <p className="pixelshelf__release">
                     📅 {game.released || game.releaseDate}
