@@ -3,6 +3,7 @@ import { supabase } from '../supabaseClient.js';
 
 export const getGames = async (req, res) => {
   try {
+
     const { data: adminGames, error: supabaseError } = await supabase
       .from('games')
       .select('*');
@@ -22,6 +23,7 @@ export const getGames = async (req, res) => {
       genre: game.genre,
       source: 'admin',
     }));
+
 
     const rawgRes = await axios.get(
       `https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&page_size=12`
@@ -46,9 +48,9 @@ export const getGames = async (req, res) => {
   }
 };
 
+// GET a single game by ID
 export const getGameById = async (req, res) => {
   const { id } = req.params;
-
   const numericId = id.startsWith('admin-')
     ? Number.parseInt(id.replace('admin-', ''), 10)
     : id;
@@ -66,32 +68,25 @@ export const getGameById = async (req, res) => {
 };
 
 export const addGame = async (req, res) => {
-  const { title, description, genre, rating, imageUrl, releaseDate } = req.body;
+  const { title, description, price } = req.body;
 
-
-  if (!title || !description || !genre || !rating || !imageUrl || !releaseDate) {
+  if (!title || !description || !price) {
+    console.error('Missing fields in request body:', req.body);
     return res.status(400).json({ error: 'All fields are required to add a game.' });
   }
-
 
   const game = {
     title,
     description,
-    genre,
-    rating: Number.parseFloat(rating),
-    image_url: imageUrl,
-    release_date: releaseDate,
-    source: 'admin',
+    price: Number.parseFloat(price),
   };
 
   try {
-
     console.log('Attempting to add game:', game);
     const { data, error } = await supabase.from('games').insert([game]).select();
 
     if (error) {
       console.error('Supabase error inserting game:', error);
-   
       return res.status(500).json({ error: error.message });
     }
 
@@ -102,6 +97,7 @@ export const addGame = async (req, res) => {
     res.status(500).json({ error: 'Failed to add game.' });
   }
 };
+
 
 export const updateGame = async (req, res) => {
   const { id } = req.params;
@@ -148,6 +144,7 @@ export const updateGame = async (req, res) => {
     res.status(500).json({ error: 'Failed to update game.' });
   }
 };
+
 
 export const deleteGame = async (req, res) => {
   const { id } = req.params;
