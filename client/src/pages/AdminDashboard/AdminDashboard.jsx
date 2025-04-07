@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './AdminDashboard.scss';
 
 const AdminDashboard = () => {
@@ -19,6 +20,7 @@ const AdminDashboard = () => {
   const API_URL = `${import.meta.env.VITE_API_BASE_URL}/games`;
   const token = localStorage.getItem('token');
 
+ 
   const fetchGames = async () => {
     try {
       const response = await axios.get(API_URL, {
@@ -43,20 +45,21 @@ const AdminDashboard = () => {
     fetchGames();
   }, [navigate, token]);
 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewGame((prev) => ({ ...prev, [name]: value }));
   };
 
+ 
   const handleAddGame = async () => {
-
     const { title, description, genre, rating, imageUrl, releaseDate } = newGame;
     if (!title || !description || !genre || !rating || !imageUrl || !releaseDate) {
       toast.error('Please fill out all fields before adding a game.');
       return;
     }
 
- 
+    console.log('Token:', token);
     console.log('Adding game with data:', newGame);
 
     try {
@@ -65,7 +68,7 @@ const AdminDashboard = () => {
       });
       console.log('Add game response:', response.data);
       toast.success('Game added successfully!');
-      // Clear the form
+  
       setNewGame({
         title: '',
         description: '',
@@ -76,7 +79,7 @@ const AdminDashboard = () => {
       });
       fetchGames();
     } catch (error) {
-      console.error('Error adding game:', error);
+      console.error('Error adding game:', error.response?.data || error);
       toast.error('Failed to add game.');
     }
   };
@@ -116,7 +119,7 @@ const AdminDashboard = () => {
       setEditGame(null);
       fetchGames();
     } catch (error) {
-      console.error('Error updating game:', error);
+      console.error('Error updating game:', error.response || error);
       toast.error('Failed to update game.');
     }
   };
@@ -134,7 +137,7 @@ const AdminDashboard = () => {
       toast.success('Game deleted successfully!');
       fetchGames();
     } catch (error) {
-      console.error('Error deleting game:', error);
+      console.error('Error deleting game:', error.response || error);
       toast.error('Failed to delete game.');
     }
   };
